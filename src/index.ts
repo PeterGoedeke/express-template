@@ -58,5 +58,16 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
 
 app.listen(process.env.PORT, () => {
     // tslint:disable-next-line: no-console
-    console.log('Server started');
+    Logger.getLogger('express').info(`Server started at port ${process.env.PORT}`)
+})
+
+const signals = [
+    'SIGHUP', 'SIGINT', 'SIGQUIT', 'SIGILL', 'SIGTRAP', 'SIGABRT',
+    'SIGBUS', 'SIGFPE', 'SIGUSR1', 'SIGSEGV', 'SIGUSR2', 'SIGTERM'
+]
+signals.forEach(signal => {
+    process.on(signal, () => {
+        Logger.getLogger('general').info(`Received ${signal}, closing server...`)
+        process.exit(1)
+    })
 })
