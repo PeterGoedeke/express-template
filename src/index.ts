@@ -5,8 +5,8 @@ import express, { NextFunction, Request, Response } from 'express'
 import path from 'path'
 import * as OpenApiValidator from 'express-openapi-validator'
 import { ValidationError, ValidationErrorItem } from 'express-openapi-validator/dist/framework/types'
-import winston from 'winston'
-import expressWinston from 'express-winston'
+import Logger from "./logger";
+import expressWinston from "express-winston";
 
 const app = express()
 app.use(express.json())
@@ -14,15 +14,8 @@ app.use(express.text())
 app.use(express.urlencoded({ extended: true }))
 
 app.use(expressWinston.logger({
-    transports: [
-        new winston.transports.Console()
-    ],
-    format: winston.format.combine(
-        winston.format.colorize(),
-        winston.format.json()
-    ),
-    meta: false,
-    // msg: 'HTTP {{req.method}} {{req.url}} -- {{res.statusCode}} {{res.responseTime}} {{Date.now()}}',
+    winstonInstance: Logger.getLogger('express'),
+    msg: '{{req.hostname}} - - - "{{req.method}} {{req.url}} HTTP{{req.httpVersion}}" {{res.statusCode}} -',
     colorize: true
 }))
 
@@ -35,9 +28,31 @@ app.use(
     })
 )
 
-app.use((err: ValidationError, req: Request, res: Response, next: NextFunction) => {
+app.use((err: any, req: Request, res: Response, next: NextFunction) => {
+    if (!(err.status && err.errors)) {
+        return next(err)
+    }
+    const verror = err as ValidationError
+    if (res.headersSent) {
+        return next(verror)
+    }
+    Logger.getLogger('validation').warn(`${verror.errors[0].path} ${verror.errors[0].message}`)
+    return res.status(verror.status).json({
+        error: verror
+    })
+})
+
+app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
+    if (res.headersSent) {
+        return next(err)
+    }
+    Logger.getLogger('controller').error(`${err.stack}`)
+
+    const displayError = process.env.NODE_ENV === 'production'
+        ? 'An unexpected error has occurred. Please try again later.'
+        : err.stack
     return res.status(500).json({
-        error: err
+        error: displayError
     })
 })
 
