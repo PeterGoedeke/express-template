@@ -40,14 +40,14 @@ declare namespace Paths {
                  * example:
                  * 5
                  */
-                export type Test = number;
+                export type Limit = number;
             }
             export interface QueryParameters {
-                test: /**
+                limit?: /**
                  * example:
                  * 5
                  */
-                Parameters.Test;
+                Parameters.Limit;
             }
             namespace Responses {
                 export type $200 = Components.Schemas.Example[];
