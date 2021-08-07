@@ -21,11 +21,13 @@ export default class Logger {
                 winston.format.timestamp({ format: 'YYYY-MM-DD HH:mm:ss' }),
                 winston.format.colorize(),
                 Logger.logFormat
-            )
+            ),
+            level: 'debug'
         }),
         new winston.transports.File({
             filename: 'logs/combined.log',
-            format: winston.format.json()
+            format: winston.format.json(),
+            level: 'debug'
         }),
         new winston.transports.File({
             level: 'error',
