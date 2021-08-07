@@ -34,10 +34,10 @@ WORKDIR /app
 
 COPY package.json ./
 
+RUN npm i
+
 COPY src ./src
 COPY prisma ./prisma
-
-RUN npm i
 
 COPY tsconfig.json ./tsconfig.json
 COPY tslint.json ./tslint.json
@@ -47,7 +47,6 @@ RUN ls -R --ignore=node_modules
 
 #Expose the right port
 ENV PORT=3000
-ENV DATABASE_URL=postgresql://postgres:Digifair420@fistbump-prod.c12phs1lweud.ap-southeast-2.rds.amazonaws.com:5432/postgres
 EXPOSE 3000
 
 # Run our app
