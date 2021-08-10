@@ -1,8 +1,11 @@
 declare namespace Components {
     namespace Responses {
-        export type NotFoundError = /* Schema which represents the JSON returned for errors and other conditions which expect status updates. */ Schemas.Error;
-        export type ParseError = /* Schema which represents the JSON returned for errors and other conditions which expect status updates. */ Schemas.Error;
-        export type UnauthorizedError = /* Schema which represents the JSON returned for errors and other conditions which expect status updates. */ Schemas.Error;
+        export type NotFoundError =
+            /* Schema which represents the JSON returned for errors and other conditions which expect status updates. */ Schemas.Error;
+        export type ParseError =
+            /* Schema which represents the JSON returned for errors and other conditions which expect status updates. */ Schemas.Error;
+        export type UnauthorizedError =
+            /* Schema which represents the JSON returned for errors and other conditions which expect status updates. */ Schemas.Error;
     }
     namespace Schemas {
         /**

@@ -1,4 +1,4 @@
-import winston from 'winston'
+import winston from 'winston';
 
 export default class Logger {
     public static getLogger(label: string): winston.Logger {
@@ -6,33 +6,33 @@ export default class Logger {
             winston.loggers.add(label, {
                 transports: Logger.transports,
                 format: winston.format.label({ label }),
-            })
+            });
         }
-        return winston.loggers.get(label)
+        return winston.loggers.get(label);
     }
 
     private static logFormat = winston.format.printf(
-        info => `${info.timestamp} ${info.level} [${info.label}]: ${info.message}`
-    )
+        info => `${info.timestamp} ${info.level} [${info.label}]: ${info.message}`,
+    );
 
     private static readonly transports = [
         new winston.transports.Console({
             format: winston.format.combine(
                 winston.format.timestamp({ format: 'YYYY-MM-DD HH:mm:ss' }),
                 winston.format.colorize(),
-                Logger.logFormat
+                Logger.logFormat,
             ),
-            level: 'debug'
+            level: 'debug',
         }),
         new winston.transports.File({
             filename: 'logs/combined.log',
             format: winston.format.json(),
-            level: 'debug'
+            level: 'debug',
         }),
         new winston.transports.File({
             level: 'error',
             filename: 'logs/error.log',
-            format: winston.format.json()
-        })
-    ]
+            format: winston.format.json(),
+        }),
+    ];
 }

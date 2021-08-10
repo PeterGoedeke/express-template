@@ -1,0 +1,14 @@
+{
+  "parser": "@typescript-eslint/parser",
+  "extends": ["prettier", "plugin:@typescript-eslint/recommended", "plugin:prettier/recommended"],
+  "parserOptions": {
+    "ecmaVersion": 12,
+    "sourceType": "module"
+  },
+  "rules": {
+    // Allows the use of {} as a type
+    "@typescript-eslint/ban-types": "off",
+    // Allows "any" to be as a type
+    "@typescript-eslint/no-explicit-any": "off"
+  }
+}
