@@ -4,7 +4,7 @@
   "description": "Express template with using TypeScript with express-openapi-validator and Prisma",
   "main": "dist/index.js",
   "scripts": {
-    "prebuild": "tslint -c tslint.json -p tsconfig.json --fix",
+    "prebuild": "npm run lint",
     "build": "tsc",
     "prestart": "npm run build",
     "start": "node .",
