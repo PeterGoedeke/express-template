@@ -17,7 +17,11 @@ export const post = asyncHandler(postInner);
 
 type Get = (
     req: Request<{}, {}, {}, Paths.Examples.Get.QueryParameters>,
-    res: Response<Paths.Examples.Get.Responses.$200 | Paths.Examples.Get.Responses.$400 | Paths.Examples.Get.Responses.$404>,
+    res: Response<
+        | Paths.Examples.Get.Responses.$200
+        | Paths.Examples.Get.Responses.$400
+        | Paths.Examples.Get.Responses.$404
+    >,
 ) => void;
 
 const getInner: Get = async (req, res) => {

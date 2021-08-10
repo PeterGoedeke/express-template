@@ -11,7 +11,8 @@
     "lint": "eslint --ext .js,.ts --fix src/",
     "dev": "nodemon --config nodemon.json src/index.ts",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "update-schema": "dtsgen -o ./src/types/schema.d.ts ./src/spec.yaml"
+    "update-schema": "dtsgen -o ./src/types/schema.d.ts ./src/spec.yaml",
+    "prepare": "husky install"
   },
   "repository": {
     "type": "git",
@@ -31,6 +32,8 @@
     "eslint": "^7.32.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^3.4.0",
+    "husky": "^7.0.1",
+    "lint-staged": "^11.1.2",
     "prettier": "^2.3.2",
     "prisma": "^2.27.0",
     "ts-node": "^10.1.0",
@@ -46,5 +49,8 @@
     "express-winston": "^4.1.0",
     "http-status-codes": "^2.1.4",
     "winston": "^3.3.3"
+  },
+  "lint-staged": {
+    "*.{js,ts}": "eslint --ext .js,.ts --fix --max-warnings 0 src/"
   }
 }

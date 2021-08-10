@@ -11,11 +11,17 @@ export default class Logger {
         return winston.loggers.get(label);
     }
 
-    private static logFormat = winston.format.printf(info => `${info.timestamp} ${info.level} [${info.label}]: ${info.message}`);
+    private static logFormat = winston.format.printf(
+        info => `${info.timestamp} ${info.level} [${info.label}]: ${info.message}`,
+    );
 
     private static readonly transports = [
         new winston.transports.Console({
-            format: winston.format.combine(winston.format.timestamp({ format: 'YYYY-MM-DD HH:mm:ss' }), winston.format.colorize(), Logger.logFormat),
+            format: winston.format.combine(
+                winston.format.timestamp({ format: 'YYYY-MM-DD HH:mm:ss' }),
+                winston.format.colorize(),
+                Logger.logFormat,
+            ),
             level: 'debug',
         }),
         new winston.transports.File({

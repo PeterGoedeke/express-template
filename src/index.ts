@@ -4,7 +4,7 @@ dotenv.config();
 import express, { NextFunction, Request, Response } from 'express';
 import path from 'path';
 import * as OpenApiValidator from 'express-openapi-validator';
-import { ValidationError, ValidationErrorItem } from 'express-openapi-validator/dist/framework/types';
+import { ValidationError } from 'express-openapi-validator/dist/framework/types';
 import Logger from './logger';
 import expressWinston from 'express-winston';
 
@@ -50,7 +50,10 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
     }
     Logger.getLogger('controller').error(`${err.stack}`);
 
-    const displayError = process.env.NODE_ENV === 'production' ? 'An unexpected error has occurred. Please try again later.' : err.stack;
+    const displayError =
+        process.env.NODE_ENV === 'production'
+            ? 'An unexpected error has occurred. Please try again later.'
+            : err.stack;
     return res.status(500).json({
         error: displayError,
     });
@@ -61,7 +64,20 @@ app.listen(process.env.PORT, () => {
     Logger.getLogger('express').info(`Server started at port ${process.env.PORT}`);
 });
 
-const signals = ['SIGHUP', 'SIGINT', 'SIGQUIT', 'SIGILL', 'SIGTRAP', 'SIGABRT', 'SIGBUS', 'SIGFPE', 'SIGUSR1', 'SIGSEGV', 'SIGUSR2', 'SIGTERM'];
+const signals = [
+    'SIGHUP',
+    'SIGINT',
+    'SIGQUIT',
+    'SIGILL',
+    'SIGTRAP',
+    'SIGABRT',
+    'SIGBUS',
+    'SIGFPE',
+    'SIGUSR1',
+    'SIGSEGV',
+    'SIGUSR2',
+    'SIGTERM',
+];
 signals.forEach(signal => {
     process.on(signal, () => {
         Logger.getLogger('general').info(`Received ${signal}, closing server...`);
